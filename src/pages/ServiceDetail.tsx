@@ -198,7 +198,7 @@ export default function ServiceDetail() {
     return (
       <div className="pt-32 pb-20 text-center">
         <h1 className="text-4xl font-bold mb-4">Service Not Found</h1>
-        <Link to="/services" className="text-gold hover:underline">Back to Services</Link>
+        <Link to="/services" className="text-secondary hover:text-secondary/80 hover:underline">Back to Services</Link>
       </div>
     );
   }
@@ -452,10 +452,10 @@ export default function ServiceDetail() {
               to={`/services/${prev.slug}`}
               className="py-8 pr-6 group hover:bg-warm-bg transition-colors border-r border-border flex items-center gap-3"
             >
-              <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-gold transition-colors" />
+              <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-secondary transition-colors" />
               <div>
                 <p className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1 font-body">Previous</p>
-                <p className="text-sm font-semibold text-foreground group-hover:text-gold transition-colors font-display">{prev.title}</p>
+                <p className="text-sm font-semibold text-foreground group-hover:text-secondary transition-colors font-display">{prev.title}</p>
               </div>
             </Link>
           ) : <div className="border-r border-border" />}
@@ -466,9 +466,9 @@ export default function ServiceDetail() {
             >
               <div>
                 <p className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1 font-body">Next</p>
-                <p className="text-sm font-semibold text-foreground group-hover:text-gold transition-colors font-display">{next.title}</p>
+                <p className="text-sm font-semibold text-foreground group-hover:text-secondary transition-colors font-display">{next.title}</p>
               </div>
-              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-gold transition-colors" />
+              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-secondary transition-colors" />
             </Link>
           ) : <div />}
         </div>
@@ -522,13 +522,13 @@ function SampleWorksCarousel({ gallery, serviceTitle, fadeUp }: { gallery: strin
           {/* Carousel arrows */}
           <button
             onClick={scrollPrev}
-            className="absolute -left-3 md:-left-5 top-[130px] md:top-[130px] w-10 h-10 rounded-full bg-background border border-border shadow-md flex items-center justify-center hover:bg-gold hover:text-gold-foreground hover:border-gold transition-all"
+            className="absolute -left-3 md:-left-5 top-[130px] md:top-[130px] w-10 h-10 rounded-full bg-background border border-border shadow-md flex items-center justify-center hover:bg-secondary hover:text-secondary-foreground hover:border-secondary transition-all"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <button
             onClick={scrollNext}
-            className="absolute -right-3 md:-right-5 top-[130px] md:top-[130px] w-10 h-10 rounded-full bg-background border border-border shadow-md flex items-center justify-center hover:bg-gold hover:text-gold-foreground hover:border-gold transition-all"
+            className="absolute -right-3 md:-right-5 top-[130px] md:top-[130px] w-10 h-10 rounded-full bg-background border border-border shadow-md flex items-center justify-center hover:bg-secondary hover:text-secondary-foreground hover:border-secondary transition-all"
           >
             <ArrowRight className="w-4 h-4" />
           </button>

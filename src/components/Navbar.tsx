@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Download } from "lucide-react";
 import { services } from "@/components/ServicesSection";
-import BookConsultationDialog from "./BookConsultationDialog";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -24,6 +23,15 @@ const Navbar = () => {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const alwaysSolid = !isHome;
+
+  const handleDownloadBrochure = () => {
+    const link = document.createElement("a");
+    link.href = "/brochure.pdf";
+    link.download = "SpaceBox-Brochure.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 90);
@@ -108,16 +116,16 @@ const Navbar = () => {
         </ul>
 
         {/* Desktop Book Consultation - opens popup */}
-        <BookConsultationDialog>
-          <button
-            className={`hidden md:inline-flex px-6 py-2.5 text-sm font-semibold rounded-lg shadow-md hover:shadow-xl hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-300 ease-out ${alwaysSolid || scrolled
-              ? "bg-primary text-primary-foreground hover:bg-secondary"
-              : "bg-white text-black hover:bg-secondary hover:text-white"
-              }`}
-          >
-            Book Consultation
-          </button>
-        </BookConsultationDialog>
+        <button
+          onClick={handleDownloadBrochure}
+          className={`hidden md:inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-lg shadow-md hover:shadow-xl hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-300 ease-out ${alwaysSolid || scrolled
+            ? "bg-primary text-primary-foreground hover:bg-secondary"
+            : "bg-white text-black hover:bg-secondary hover:text-white"
+            }`}
+        >
+          <Download className="w-4 h-4" />
+          Download Brochure
+        </button>
 
         {/* Mobile toggle */}
         <button
@@ -176,13 +184,13 @@ const Navbar = () => {
               )
             )}
             <li>
-              <BookConsultationDialog>
-                <button
-                  className="inline-flex px-6 py-2.5 text-sm font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-secondary shadow-md hover:shadow-xl transition-all duration-300 ease-out"
-                >
-                  Book Consultation
-                </button>
-              </BookConsultationDialog>
+              <button
+                onClick={handleDownloadBrochure}
+                className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-secondary shadow-md hover:shadow-xl transition-all duration-300 ease-out"
+              >
+                <Download className="w-4 h-4" />
+                Download Brochure
+              </button>
             </li>
           </ul>
         </div>
