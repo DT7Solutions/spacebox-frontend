@@ -27,10 +27,7 @@ const HeroSection = () => {
             Introducing Custom Interior Solutions in Telangana
           </h1>
           <p className="mt-6 text-primary-foreground/80 max-w-md text-sm sm:text-lg leading-relaxed font-body animate-fade-in text-justify">
-            Not out of the box. We think within your space. SpaceBox Concepts is
-            a professional Interior Design Company in Telangana delivering
-            modern interior design solutions for residential, commercial, and
-            office spaces.
+            Not out of the box. We think within your space. 
           </p>
           <Link
             to="/projects"
