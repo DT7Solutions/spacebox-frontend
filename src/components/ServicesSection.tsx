@@ -55,12 +55,15 @@ const ServicesSection = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="text-white text-lg font-semibold leading-tight">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 backdrop-blur-sm bg-black/20 border-t border-white/10">
+                    <h3 className="text-white text-lg font-semibold leading-tight drop-shadow-md">
                       {s.title}
                     </h3>
                     <p className="text-white/70 text-sm mt-1 line-clamp-2">{s.desc}</p>
+                    <span className="inline-flex items-center gap-1 text-secondary text-sm font-semibold mt-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                      Know More <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
                   </div>
                 </div>
               </Link>
