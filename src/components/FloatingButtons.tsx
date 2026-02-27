@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowUp, Phone, CalendarCheck } from "lucide-react";
 import { Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import BookConsultationDialog from "./BookConsultationDialog";
+
 
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/spaceboxconcepts", label: "Facebook", bg: "bg-destructive" },
@@ -41,12 +41,15 @@ const FloatingButtons = () => {
         {/* Bottom dock */}
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md safe-area-pb">
           <div className="flex items-center justify-around py-2 relative">
-            <BookConsultationDialog>
-              <button className="flex flex-col items-center gap-1 text-background/80 hover:text-background transition-colors px-3 py-1">
-                <CalendarCheck className="w-5 h-5" />
-                <span className="text-[10px] leading-tight font-medium">Book 1:1<br />Consultation</span>
-              </button>
-            </BookConsultationDialog>
+            <a
+              href="https://calendly.com/spaceboxconcepts/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center gap-1 text-background/80 hover:text-background transition-colors px-3 py-1"
+            >
+              <CalendarCheck className="w-5 h-5" />
+              <span className="text-[10px] leading-tight font-medium">Book 1:1<br />Consultation</span>
+            </a>
 
             <a href="tel:+917799101433" className="flex flex-col items-center -mt-6">
               <span className="w-14 h-14 rounded-full bg-secondary text-secondary-foreground shadow-[0_4px_20px_rgba(220,38,38,0.4)] flex items-center justify-center">
@@ -107,14 +110,15 @@ const FloatingButtons = () => {
         </a>
 
         {/* Book Consultation */}
-        <BookConsultationDialog>
-          <button
-            className={`${ICON_SIZE} rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 hover:scale-110 transition-all duration-300`}
-            aria-label="Book Consultation"
-          >
-            <CalendarCheck className={ICON_INNER} />
-          </button>
-        </BookConsultationDialog>
+        <a
+          href="https://calendly.com/spaceboxconcepts/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ICON_SIZE} rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 hover:scale-110 transition-all duration-300`}
+          aria-label="Book Consultation"
+        >
+          <CalendarCheck className={ICON_INNER} />
+        </a>
 
         {/* Back to top */}
         <button
