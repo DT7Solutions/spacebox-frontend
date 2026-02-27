@@ -47,7 +47,7 @@ const OurWorkSection = () => {
       style={{ height: `${totalScrollHeight + 100}px` }}
     >
       {/* Sticky container that stays in view */}
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center pt-24 lg:pt-0">
         <div className="container mx-auto px-4 sm:px-6 md:px-10 lg:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-center">
             {/* Left: Sticky text */}
@@ -59,17 +59,17 @@ const OurWorkSection = () => {
               className=""
             >
               <p className="text-secondary text-sm uppercase tracking-[0.3em] mb-4 font-body">
-                Portfolio
+                Our Work
               </p>
               <h2 className="text-4xl md:text-5xl text-foreground leading-tight">
-                Our
+                Spaces We 
                 <br />
-                Work
+                Designed 
               </h2>
               <p className="mt-6 text-muted-foreground font-body max-w-sm leading-relaxed">
-              Explore our completed projects in the form of Residential, Commercial, and Office Interior Designers in Telangana.
+                Explore our completed projects in the form of Residential, Commercial, and Office Interior Designers in Telangana.
               </p>
-              
+
               <a
                 href="/projects"
                 className="mt-8 inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-lg font-semibold uppercase tracking-wider text-sm hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] hover:bg-secondary transition-all duration-300 shadow-md hover:shadow-xl"

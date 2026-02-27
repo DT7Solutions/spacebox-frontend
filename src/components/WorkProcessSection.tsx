@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { ClipboardList, Palette, LayoutGrid, Box, ShoppingBag, HardHat, CheckCircle, HandshakeIcon } from "lucide-react";
 import ctaBg from "@/assets/cta-bg.jpg";
 
@@ -87,26 +87,7 @@ const WorkProcessSection = () => {
           </motion.div>
 
           {/* Horizontal scrolling cards */}
-          <div className="flex-1 min-h-0 flex items-center overflow-hidden">
-            <motion.div
-              style={{ x }}
-              className="flex gap-6"
-            >
-              {stages.map((stage, i) => {
-                const Icon = stage.icon;
-                return (
-                  <StageCard
-                    key={stage.num}
-                    stage={stage}
-                    index={i}
-                    Icon={Icon}
-                    scrollYProgress={scrollYProgress}
-                    total={stages.length}
-                  />
-                );
-              })}
-            </motion.div>
-          </div>
+          <HorizontalCards x={x} scrollYProgress={scrollYProgress} />
 
           {/* Bottom dots (mobile progress) */}
           <div className="flex-shrink-0 pb-8 pt-4 flex justify-center gap-2 md:hidden">
@@ -120,22 +101,62 @@ const WorkProcessSection = () => {
   );
 };
 
+/* ── Horizontal Cards with active tracking ────────────────── */
+function HorizontalCards({
+  x,
+  scrollYProgress,
+}: {
+  x: ReturnType<typeof useTransform>;
+  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
+}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const idx = Math.min(Math.floor(latest * stages.length), stages.length - 1);
+    setActiveIndex(idx);
+  });
+
+  return (
+    <div className="flex-1 min-h-0 flex items-center overflow-hidden">
+      <motion.div style={{ x }} className="flex gap-6">
+        {stages.map((stage, i) => {
+          const Icon = stage.icon;
+          return (
+            <StageCard
+              key={stage.num}
+              stage={stage}
+              index={i}
+              Icon={Icon}
+              isActive={i === activeIndex}
+              scrollYProgress={scrollYProgress}
+              total={stages.length}
+            />
+          );
+        })}
+      </motion.div>
+    </div>
+  );
+}
+
 /* ── Card ─────────────────────────────────────────────────── */
 function StageCard({
   stage,
   index,
   Icon,
+  isActive,
   scrollYProgress,
   total,
 }: {
   stage: typeof stages[0];
   index: number;
   Icon: typeof stages[0]["icon"];
+  isActive: boolean;
   scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
   total: number;
 }) {
   const segStart = index / total;
   const segEnd = (index + 1) / total;
+  const [isHovered, setIsHovered] = useState(false);
 
   // Each card scales up and glows when it's the "active" one
   const cardScale = useTransform(
@@ -154,6 +175,8 @@ function StageCard({
     [0.1, 0.5, 0.5, 0.1]
   );
 
+  const showWhite = isActive || isHovered;
+
   return (
     <motion.div
       style={{
@@ -162,7 +185,9 @@ function StageCard({
         width: `${CARD_W}px`,
         minWidth: `${CARD_W}px`,
       }}
-      className="h-[340px] md:h-[360px]"
+      className="h-[340px] md:h-[360px] group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
         className="relative h-full rounded-xl backdrop-blur-md p-6 flex flex-col overflow-hidden"
@@ -182,10 +207,13 @@ function StageCard({
           }}
         />
 
-        {/* Number - double outlined */}
+        {/* Number - filled white when active/hovered, outlined when inactive */}
         <span
-          className="text-7xl font-black leading-none mb-2 select-none"
-          style={{
+          className="text-7xl font-black leading-none mb-2 select-none transition-all duration-300"
+          style={showWhite ? {
+            color: "#ffffff",
+            WebkitTextStroke: "2px #ffffff",
+          } : {
             color: "transparent",
             WebkitTextStroke: "2px rgba(255,255,255,0.9)",
             textShadow: "0 0 0 transparent",
@@ -195,17 +223,23 @@ function StageCard({
           {stage.num}
         </span>
 
-        {/* Icon */}
-        <div className="w-11 h-11 rounded-lg bg-secondary/15 flex items-center justify-center mb-4">
-          <Icon className="w-5 h-5 text-secondary" />
+        {/* Icon - white when active/hovered, secondary when inactive */}
+        <div
+          className={`w-11 h-11 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 ${showWhite ? "bg-white/15" : "bg-secondary/15"
+            }`}
+        >
+          <Icon className={`w-5 h-5 transition-colors duration-300 ${showWhite ? "text-white" : "text-secondary"
+            }`} />
         </div>
 
-        {/* Text */}
+        {/* Text - white when active/hovered, muted when inactive */}
         <div className="mt-auto">
-          <h3 className="font-bold text-sm uppercase tracking-wider leading-tight mb-2 text-white">
+          <h3 className={`font-bold text-sm uppercase tracking-wider leading-tight mb-2 transition-colors duration-300 ${showWhite ? "text-white" : "text-white/80"
+            }`}>
             {stage.title}
           </h3>
-          <p className="text-xs leading-relaxed text-white/60">
+          <p className={`text-xs leading-relaxed transition-colors duration-300 ${showWhite ? "text-white" : "text-white/60"
+            }`}>
             {stage.desc}
           </p>
         </div>
