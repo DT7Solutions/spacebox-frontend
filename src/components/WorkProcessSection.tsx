@@ -180,8 +180,8 @@ function StageCard({
   return (
     <motion.div
       style={{
-        scale: cardScale,
-        opacity: cardOpacity,
+        scale: isHovered ? 1 : cardScale,
+        opacity: isHovered ? 1 : cardOpacity,
         width: `${CARD_W}px`,
         minWidth: `${CARD_W}px`,
       }}
