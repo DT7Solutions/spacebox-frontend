@@ -7,7 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/spaceboxconcepts", label: "Facebook", bg: "bg-destructive" },
   { icon: Youtube, href: "https://www.youtube.com/@spaceboxconcepts", label: "YouTube", bg: "bg-destructive" },
-  { icon: Instagram, href: "https://www.instagram.com/spacebox_concepts/", label: "Instagram", bg: "bg-destructive" },
+  { icon: Instagram, href: "https://www.instagram.com/spaceboxconcepts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==", label: "Instagram", bg: "bg-destructive" },
   { icon: Linkedin, href: "https://www.linkedin.com/company/spacebox-concepts", label: "LinkedIn", bg: "bg-destructive" },
 ];
 

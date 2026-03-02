@@ -38,29 +38,29 @@ const Footer = () => {
           {/* Contact Details Row */}
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 w-full max-w-4xl mb-12 items-start text-left">
             {/* Location */}
-            <div className="flex items-center gap-3">
+            <a href="https://maps.google.com/?q=spacebox+concepts+Interior+Designer+Kondapur" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group">
               <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center shrink-0">
                 <MapPin size={20} className="text-secondary" />
               </div>
               <div className="text-left">
                 <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">Visit our office</p>
-                <p className="text-white/80 font-body text-sm leading-snug">
+                <p className="text-white/80 font-body text-sm leading-snug group-hover:text-secondary transition-colors">
                   Plot no.147, V-Pride building,<br />Spring valley road, Kondapur,<br />Serilingampally - 500084
                 </p>
               </div>
-            </div>
+            </a>
             {/* Email */}
-            <div className="flex items-center gap-3">
+            <a href="mailto:spaceboxconcepts@gmail.com" className="flex items-center gap-3 group">
               <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center shrink-0">
                 <Mail size={20} className="text-secondary" />
               </div>
               <div className="text-left">
                 <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">Mail us everyday</p>
-                <a href="mailto:spaceboxdesigns@gmail.com" className="text-white font-body text-sm hover:text-secondary transition-colors">
-                  spaceboxdesigns@gmail.com
-                </a>
+                <p className="text-white font-body text-sm group-hover:text-secondary transition-colors">
+                  spaceboxconcepts@gmail.com
+                </p>
               </div>
-            </div>
+            </a>
             {/* Phone */}
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center shrink-0">
@@ -109,12 +109,18 @@ const Footer = () => {
             <div className="flex gap-3">
               {/* X (Twitter) icon */}
               <a href="#" className="w-9 h-9 rounded-full border border-white/40 flex items-center justify-center text-white/70 hover:text-secondary hover:border-secondary transition-colors">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
               </a>
-              {[Facebook, Instagram, Linkedin].map((Icon, i) => (
+              {[
+                { icon: Facebook, href: "https://www.facebook.com/spaceboxconcepts" },
+                { icon: Instagram, href: "https://www.instagram.com/spaceboxconcepts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
+                { icon: Linkedin, href: "https://www.linkedin.com/company/spacebox-concepts" },
+              ].map(({ icon: Icon, href }, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full border border-white/40 flex items-center justify-center text-white/70 hover:text-secondary hover:border-secondary transition-colors"
                 >
                   <Icon size={16} />

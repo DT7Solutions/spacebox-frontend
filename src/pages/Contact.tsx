@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Instagram, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
 import SubBanner from '@/components/SubBanner';
 import projectWorkspace from '@/assets/project-workspace.jpg';
 export default function Contact() {
@@ -113,30 +113,32 @@ export default function Contact() {
             <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="space-y-8">
               <div className="bg-card border border-border rounded-2xl p-8 space-y-6">
                 <h3 className="text-xl font-bold mb-6">Contact Information</h3>
-                <a href="mailto:spaceboxdesigns@gmail.com" className="flex items-start gap-4 group">
-                  <Mail className="w-5 h-5 text-primary mt-0.5" />
+                <a href="mailto:spaceboxconcepts@gmail.com" className="flex items-start gap-4 group">
+                  <Mail className="w-5 h-5 text-secondary mt-0.5" />
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium group-hover:text-primary transition-colors">spaceboxdesigns@gmail.com</p>
+                    <p className="font-medium group-hover:text-primary transition-colors">spaceboxconcepts@gmail.com</p>
                   </div>
                 </a>
                 <a href="tel:+917799101433" className="flex items-start gap-4 group">
-                  <Phone className="w-5 h-5 text-primary mt-0.5" />
+                  <Phone className="w-5 h-5 text-secondary mt-0.5" />
                   <div>
                     <p className="text-sm text-muted-foreground">Phone</p>
                     <p className="font-medium group-hover:text-primary transition-colors">+91 7799101433</p>
                     <p className="font-medium group-hover:text-primary transition-colors">+91 8179999188</p>
                   </div>
                 </a>
-                <a href="https://www.instagram.com/spaceboxdesigns/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
-                  <Instagram className="w-5 h-5 text-primary mt-0.5" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Instagram</p>
-                    <p className="font-medium group-hover:text-primary transition-colors">@spaceboxdesigns</p>
-                  </div>
-                </a>
                 <div className="flex items-start gap-4">
-                  <Clock className="w-5 h-5 text-primary mt-0.5" />
+                  <MapPin className="w-5 h-5 text-secondary mt-0.5" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Location</p>
+                    <p className="font-medium">Plot no.147, V-Pride building,</p>
+                    <p className="font-medium">Spring valley road, Kondapur,</p>
+                    <p className="font-medium">Serilingampally - 500084</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Clock className="w-5 h-5 text-secondary mt-0.5" />
                   <div>
                     <p className="text-sm text-muted-foreground">Business Hours</p>
                     <p className="font-medium">Mon - Sat: 9:00 AM - 7:00 PM</p>
@@ -159,7 +161,7 @@ export default function Contact() {
             <div className="rounded-2xl overflow-hidden border border-border h-[400px]">
               <iframe
                 title="Spacebox Designs Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2!2d78.3866!3d17.4433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDI2JzM2LjAiTiA3OMKwMjMnMTEuOCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3805.506688235522!2d78.3340557!3d17.4833099!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93b2d1a0b0e9%3A0x4c1bb4fd77b5c530!2sspacebox%20concepts%20%7C%20Interior%20Designer!5e0!3m2!1sen!2sin!4v1772433072922!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
