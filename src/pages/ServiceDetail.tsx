@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, CheckCircle2, Sparkles, Palette, Lightbulb, ChevronDown, ArrowLeft, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
@@ -185,8 +186,10 @@ export default function ServiceDetail() {
   const index = services.findIndex((s) => s.slug === slug);
   const service = services[index];
 
-  const [form, setForm] = useState({ name: '', phone: '', email: '', service: '', message: '' });
+  const [form, setForm] = useState({ first_name: '', last_name: '', phone: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   const highlightsRef = useRef<HTMLDivElement>(null);
@@ -212,13 +215,33 @@ export default function ServiceDetail() {
   const faqs = serviceFAQs[service.slug] || serviceFAQs["interior-consultation"];
   const tagline = serviceTaglines[service.slug] || "";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setForm({ name: '', phone: '', email: '', service: '', message: '' });
-    }, 2500);
+    setSending(true);
+    setSendError(false);
+
+    try {
+      await emailjs.send(
+        'service_yy5td3a',
+        'template_mhqv7a3',
+        {
+          first_name: form.first_name,
+          last_name: form.last_name,
+          phone: form.phone,
+          email: form.email,
+          message: form.message,
+        },
+        'fvEpos_G5k7KO9CLG'
+      );
+      setSubmitted(true);
+      setForm({ first_name: '', last_name: '', phone: '', email: '', message: '' });
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      setSendError(true);
+      setTimeout(() => setSendError(false), 3000);
+    } finally {
+      setSending(false);
+    }
   };
 
   const fadeUp = {
@@ -334,73 +357,93 @@ export default function ServiceDetail() {
             className="max-w-3xl mx-auto bg-warm-bg border border-border rounded-2xl p-8 md:p-12 shadow-sm"
             {...fadeUp}
           >
-            <div className="text-center mb-8">
-              <h2 className="font-display text-2xl md:text-3xl text-foreground mb-2 font-semibold">
-                Free Consultation — Talk to Our Expert
-              </h2>
-              <p className="text-muted-foreground text-sm font-body">Let's convert your idea into reality</p>
-            </div>
+            {submitted ? (
+              <div className="text-center py-8">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle2 className="w-10 h-10 text-green-600" />
+                </div>
+                <h3 className="font-display text-2xl md:text-3xl text-foreground mb-3 font-semibold">
+                  Appointment Successfully Booked!
+                </h3>
+                <p className="text-muted-foreground text-sm md:text-base font-body max-w-md mx-auto">
+                  Thank you for reaching out. Our team will contact you within <strong className="text-foreground">24 hours</strong> to discuss your requirements.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="text-center mb-8">
+                  <h2 className="font-display text-2xl md:text-3xl text-foreground mb-2 font-semibold">
+                    Free Consultation — Talk to Our Expert
+                  </h2>
+                  <p className="text-muted-foreground text-sm font-body">Let's convert your idea into reality</p>
+                </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="text-xs font-medium mb-1.5 block text-foreground font-body">First Name *</label>
-                  <input
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Last Name *</label>
-                  <input
-                    className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
-                    placeholder="Last name"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Phone Number *</label>
-                  <input
-                    required
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
-                    placeholder="+91 XXXXX XXXXX"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Your Email Address *</label>
-                  <input
-                    required
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
-                    placeholder="your@email.com"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Write Your Message</label>
-                <textarea
-                  rows={4}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all resize-none font-body"
-                  placeholder={`Describe your ${service.title.toLowerCase()} requirements...`}
-                />
-              </div>
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-secondary text-secondary-foreground px-8 py-3.5 rounded-lg font-semibold uppercase tracking-wider text-sm hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-300 shadow-md hover:shadow-xl font-body"
-              >
-                {submitted ? 'Request Sent!' : <><Send className="w-4 h-4" /> Book Appointment</>}
-              </button>
-            </form>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="text-xs font-medium mb-1.5 block text-foreground font-body">First Name *</label>
+                      <input
+                        required
+                        value={form.first_name}
+                        onChange={(e) => setForm({ ...form, first_name: e.target.value })}
+                        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Last Name *</label>
+                      <input
+                        required
+                        value={form.last_name}
+                        onChange={(e) => setForm({ ...form, last_name: e.target.value })}
+                        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
+                        placeholder="Last name"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Phone Number *</label>
+                      <input
+                        required
+                        value={form.phone}
+                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
+                        placeholder="+91 XXXXX XXXXX"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Your Email Address *</label>
+                      <input
+                        required
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Write Your Message</label>
+                    <textarea
+                      rows={4}
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all resize-none font-body"
+                      placeholder={`Describe your ${service.title.toLowerCase()} requirements...`}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="inline-flex items-center justify-center gap-2 bg-secondary text-secondary-foreground px-8 py-3.5 rounded-lg font-semibold uppercase tracking-wider text-sm hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-300 shadow-md hover:shadow-xl font-body disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {sending ? 'Sending...' : submitted ? '✓ Request Sent!' : sendError ? '✕ Failed, Try Again' : <><Send className="w-4 h-4" /> Book Appointment</>}
+                  </button>
+                </form>
+              </>
+            )}
           </motion.div>
         </div>
       </section>
