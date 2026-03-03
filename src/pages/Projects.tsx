@@ -283,7 +283,7 @@ export default function Projects() {
               Let's discuss your vision and create something extraordinary together.
             </p>
             <Link
-              to="/contact"
+              to="/start-project"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-lg font-semibold uppercase tracking-wider text-sm hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] hover:bg-secondary transition-all duration-300 shadow-md hover:shadow-xl"
             >
               Start Your Project

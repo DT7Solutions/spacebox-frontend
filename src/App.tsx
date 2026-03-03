@@ -14,6 +14,7 @@ import Blog from "./pages/Blog";
 import ServiceDetail from "./pages/ServiceDetail";
 import BlogDetail from "./pages/BlogDetail";
 import Careers from "./pages/Careers";
+import StartProject from "./pages/StartProject";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/start-project" element={<StartProject />} />
           </Route>
           <Route path="/admin" element={<AdminRedirect />} />
           <Route path="/admin/*" element={<AdminRedirect />} />
