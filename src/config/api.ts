@@ -24,4 +24,7 @@ export const ENDPOINTS = {
     JOB_LIST: "/api/get_job_list/",
     JOB_DETAIL: (id: number) => `/api/get_job_detail/${id}/`,
     APPLY_JOB: "/api/apply_job/",
+
+    // Project Inquiry
+    PROJECT_INQUIRY: "/api/project-inquiry/",
 } as const;

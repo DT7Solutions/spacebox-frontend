@@ -333,7 +333,7 @@ export default function Careers() {
               We're always open to hearing from talented individuals. Send us your portfolio and resume, and we'll keep you in mind for future opportunities.
             </p>
             <a
-              href="mailto:spaceboxconcepts@gmail.com"
+              href="mailto:spaceboxdesigns@gmail.com?subject=General Application - SpaceBox Concepts"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-lg font-semibold uppercase tracking-wider text-sm hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] hover:bg-secondary transition-all duration-300 shadow-md hover:shadow-xl"
             >
               <MailIcon className="w-4 h-4" /> Send Your Resume

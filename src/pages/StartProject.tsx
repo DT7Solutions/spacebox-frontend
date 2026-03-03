@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, User, Briefcase, Palette, Home, Send, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, User, Briefcase, Palette, Home, Send, ChevronDown, Loader2, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import SubBanner from "@/components/SubBanner";
+import { apiUrl, ENDPOINTS } from "@/config/api";
 import {
   Select,
   SelectContent,
@@ -70,6 +71,8 @@ const stepInfo = [
 const StartProject = () => {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -112,8 +115,26 @@ const StartProject = () => {
     }
   };
 
-  const handleSubmit = () => {
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setError(null);
+    try {
+      debugger;
+      const response = await fetch(apiUrl(ENDPOINTS.PROJECT_INQUIRY), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.detail || data?.message || `Submission failed (${response.status})`);
+      }
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const next = () => { if (step < TOTAL_STEPS && canProceed()) setStep(step + 1); };
@@ -163,13 +184,12 @@ const StartProject = () => {
             return (
               <div key={i} className="relative z-10 flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border-2 ${
-                    isDone
-                      ? "bg-secondary border-secondary text-secondary-foreground"
-                      : isActive
+                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border-2 ${isDone
+                    ? "bg-secondary border-secondary text-secondary-foreground"
+                    : isActive
                       ? "bg-background border-secondary text-secondary"
                       : "bg-background border-border text-muted-foreground"
-                  }`}
+                    }`}
                 >
                   {isDone ? <Check className="w-5 h-5" /> : <StepIcon className="w-4 h-4" />}
                 </div>
@@ -306,8 +326,8 @@ const StartProject = () => {
                       <div>
                         <label className="text-sm font-medium mb-3 block">
                           {form.propertyType.includes("Office") ? "Office Size" :
-                           form.propertyType.includes("Apartment") || form.propertyType.includes("House") ? "Configuration" :
-                           "Sub Type"} *
+                            form.propertyType.includes("Apartment") || form.propertyType.includes("House") ? "Configuration" :
+                              "Sub Type"} *
                         </label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                           {selected.subTypes.map((st) => (
@@ -315,11 +335,10 @@ const StartProject = () => {
                               key={st}
                               type="button"
                               onClick={() => update("propertySubType", st)}
-                              className={`px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${
-                                form.propertySubType === st
-                                  ? "border-secondary bg-secondary/10 text-foreground font-medium"
-                                  : "border-border bg-background text-muted-foreground hover:border-secondary/50"
-                              }`}
+                              className={`px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${form.propertySubType === st
+                                ? "border-secondary bg-secondary/10 text-foreground font-medium"
+                                : "border-border bg-background text-muted-foreground hover:border-secondary/50"
+                                }`}
                             >
                               {st}
                             </button>
@@ -366,11 +385,10 @@ const StartProject = () => {
                           key={b}
                           type="button"
                           onClick={() => update("budget", b)}
-                          className={`px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${
-                            form.budget === b
-                              ? "border-secondary bg-secondary/10 text-foreground font-medium"
-                              : "border-border bg-background text-muted-foreground hover:border-secondary/50"
-                          }`}
+                          className={`px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${form.budget === b
+                            ? "border-secondary bg-secondary/10 text-foreground font-medium"
+                            : "border-border bg-background text-muted-foreground hover:border-secondary/50"
+                            }`}
                         >
                           {b}
                         </button>
@@ -385,11 +403,10 @@ const StartProject = () => {
                           key={t}
                           type="button"
                           onClick={() => update("timeline", t)}
-                          className={`px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${
-                            form.timeline === t
-                              ? "border-secondary bg-secondary/10 text-foreground font-medium"
-                              : "border-border bg-background text-muted-foreground hover:border-secondary/50"
-                          }`}
+                          className={`px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${form.timeline === t
+                            ? "border-secondary bg-secondary/10 text-foreground font-medium"
+                            : "border-border bg-background text-muted-foreground hover:border-secondary/50"
+                            }`}
                         >
                           {t}
                         </button>
@@ -414,11 +431,10 @@ const StartProject = () => {
                           key={s}
                           type="button"
                           onClick={() => toggleArrayItem("styles", s)}
-                          className={`text-left px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${
-                            form.styles.includes(s)
-                              ? "border-secondary bg-secondary/10 text-foreground font-medium"
-                              : "border-border bg-background text-muted-foreground hover:border-secondary/50"
-                          }`}
+                          className={`text-left px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${form.styles.includes(s)
+                            ? "border-secondary bg-secondary/10 text-foreground font-medium"
+                            : "border-border bg-background text-muted-foreground hover:border-secondary/50"
+                            }`}
                         >
                           {s}
                         </button>
@@ -482,11 +498,23 @@ const StartProject = () => {
           </motion.div>
         </AnimatePresence>
 
+        {/* Error Message */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg px-4 py-3 mt-6 text-sm"
+          >
+            <AlertCircle className="w-5 h-5 shrink-0" />
+            <span>{error}</span>
+          </motion.div>
+        )}
+
         {/* Navigation */}
         <div className="flex items-center justify-between mt-8">
           <button
             onClick={prev}
-            disabled={step === 1}
+            disabled={step === 1 || submitting}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-sm font-medium disabled:opacity-30 disabled:cursor-not-allowed hover:bg-muted transition-all"
           >
             <ArrowLeft className="w-4 h-4" /> Back
@@ -503,9 +531,14 @@ const StartProject = () => {
           ) : (
             <button
               onClick={handleSubmit}
-              className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-3 rounded-lg text-sm font-semibold hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 shadow-md hover:shadow-xl"
+              disabled={submitting}
+              className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-3 rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 shadow-md hover:shadow-xl"
             >
-              <Send className="w-4 h-4" /> Submit Project
+              {submitting ? (
+                <><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</>
+              ) : (
+                <><Send className="w-4 h-4" /> Submit Project</>
+              )}
             </button>
           )}
         </div>
