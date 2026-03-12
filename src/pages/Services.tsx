@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { services } from '@/components/ServicesSection';
@@ -8,6 +9,11 @@ import consultation from "@/assets/services/consultation.jpg";
 export default function Services() {
   return (
     <div className="pt-20">
+      <SEO
+        title="Interior Design Services"
+        description="Explore our comprehensive interior design services including space planning, 3D modelling, furniture selection, lighting design, colour schemes, and project management in Telangana."
+        keywords="interior design services, space planning, 3D modelling, furniture selection, lighting design, colour schemes, project management, Hyderabad, Telangana"
+      />
       <SubBanner
         image={consultation}
         title="Comprehensive Interior"

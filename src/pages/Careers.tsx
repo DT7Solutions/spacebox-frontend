@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Briefcase, MapPin, Clock, ChevronDown, ChevronUp, Send, Upload, X, Loader2 } from "lucide-react";
@@ -187,6 +188,11 @@ export default function Careers() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="Careers - Join Our Creative Team"
+        description="Explore career opportunities at SpaceBox Concepts. Join our talented team of interior designers, project managers, and creative professionals in Hyderabad."
+        keywords="interior design careers, jobs at SpaceBox Concepts, Hyderabad design jobs, interior designer vacancy, creative jobs Telangana"
+      />
       <SubBanner
         image={projectWorkspace}
         title="Join Our"

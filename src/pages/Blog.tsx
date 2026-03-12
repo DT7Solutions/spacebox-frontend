@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -16,6 +17,11 @@ export default function Blog() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="Interior Design Blog - Tips & Trends"
+        description="Read the latest interior design tips, trends, and inspiration from SpaceBox Concepts. Expert insights on colour psychology, small spaces, and more."
+        keywords="interior design blog, design tips, design trends 2025, colour psychology, small space design, home decor ideas, SpaceBox Concepts blog"
+      />
       <SubBanner
         image={blogsBanner}
         title="Design"

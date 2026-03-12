@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
@@ -222,6 +223,11 @@ export default function Projects() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="Our Projects - Interior Design Portfolio"
+        description="Browse our portfolio of residential and commercial interior design projects in Telangana. See how SpaceBox Concepts transforms spaces with custom designs."
+        keywords="interior design portfolio, residential projects, commercial projects, Hyderabad interiors, SpaceBox projects, before after interiors, office design"
+      />
       <SubBanner
         image={projectsBanner}
         title="Portfolio of"

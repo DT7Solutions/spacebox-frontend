@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { useState, useCallback, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -265,6 +266,11 @@ export default function ServiceDetail() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title={`${service.title} - Interior Design Services`}
+        description={service.desc}
+        keywords={`${service.title}, interior design, SpaceBox Concepts, Hyderabad, Telangana, ${service.slug.replace(/-/g, ' ')}`}
+      />
       {/* SubBanner */}
       <SubBanner
         image={service.image}

@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
@@ -61,6 +62,11 @@ export default function Contact() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="Contact Us - Get In Touch"
+        description="Contact SpaceBox Concepts for interior design consultations in Telangana. Reach us by phone, email, or visit our office in Hyderabad."
+        keywords="contact SpaceBox Concepts, interior design consultation, Hyderabad office, Telangana interior designers, get in touch, free consultation"
+      />
       <SubBanner
         image={projectWorkspace}
         title="Let's Create Something"

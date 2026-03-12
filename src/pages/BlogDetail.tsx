@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Calendar, Tag } from 'lucide-react';
@@ -56,6 +57,11 @@ export default function BlogDetail() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title={post.meta_title || post.title}
+        description={post.meta_description || post.short_description}
+        keywords={post.meta_keywords || post.tags || 'interior design blog'}
+      />
       <SubBanner
         image={mediaUrl(post.image)}
         title={post.title}

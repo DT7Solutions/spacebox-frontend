@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import {
@@ -142,6 +143,11 @@ export default function About() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="About Us - Our Story & Team"
+        description="Learn about SpaceBox Concepts — our passionate team of interior designers in Telangana dedicated to crafting custom residential and commercial spaces that inspire."
+        keywords="about SpaceBox Concepts, interior design team, Telangana designers, Hyderabad interior designers, design philosophy, our story"
+      />
       {/* ═══════ HERO SUBBANNER ═══════ */}
       <section ref={heroRef} className="relative h-[250px] overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
