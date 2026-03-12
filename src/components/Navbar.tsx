@@ -25,12 +25,7 @@ const Navbar = () => {
   const alwaysSolid = !isHome;
 
   const handleDownloadBrochure = () => {
-    const link = document.createElement("a");
-    link.href = "/brochure.pdf";
-    link.download = "SpaceBox-Brochure.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    window.open("/brochure.pdf", "_blank", "noopener,noreferrer");
   };
 
   useEffect(() => {
@@ -175,7 +170,7 @@ const Navbar = () => {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-sm font-medium text-foreground hover:text-secondary transition-colors"
+                    className={`text-sm font-medium transition-colors hover:text-secondary ${location.pathname === link.href ? "text-secondary" : "text-foreground"}`}
                     onClick={() => setOpen(false)}
                   >
                     {link.label}

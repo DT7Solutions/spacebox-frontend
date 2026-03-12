@@ -38,24 +38,40 @@ const Footer = () => {
           {/* Contact Details Row */}
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 w-full max-w-4xl mb-12 items-start text-left">
             {/* Location */}
-            <a href="https://maps.google.com/?q=spacebox+concepts+Interior+Designer+Kondapur" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group">
+            <a
+              href="https://maps.google.com/?q=spacebox+concepts+Interior+Designer+Kondapur"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 group"
+            >
               <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center shrink-0">
                 <MapPin size={20} className="text-secondary" />
               </div>
               <div className="text-left">
-                <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">Visit our office</p>
+                <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">
+                  Visit our office
+                </p>
                 <p className="text-white/80 font-body text-sm leading-snug group-hover:text-secondary transition-colors">
-                  Plot no.147, V-Pride building,<br />Spring valley road, Kondapur,<br />Serilingampally - 500084
+                  Plot no.147, V-Pride building,
+                  <br />
+                  Spring valley road, Kondapur,
+                  <br />
+                  Serilingampally - 500084
                 </p>
               </div>
             </a>
             {/* Email */}
-            <a href="mailto:spaceboxconcepts@gmail.com" className="flex items-center gap-3 group">
+            <a
+              href="mailto:spaceboxconcepts@gmail.com"
+              className="flex items-center gap-3 group"
+            >
               <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center shrink-0">
                 <Mail size={20} className="text-secondary" />
               </div>
               <div className="text-left">
-                <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">Mail us everyday</p>
+                <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">
+                  Mail us everyday
+                </p>
                 <p className="text-white font-body text-sm group-hover:text-secondary transition-colors">
                   spaceboxconcepts@gmail.com
                 </p>
@@ -66,15 +82,21 @@ const Footer = () => {
               <div className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center shrink-0">
                 <Phone size={20} className="text-secondary" />
               </div>
+
               <div className="text-left">
-                <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">Call us Anytime</p>
-                <a href="tel:+917799101433" className="text-white font-body text-sm hover:text-secondary transition-colors">
-                  +91 77991 01433
-                </a>
-                <span className="text-white/40 mx-1">|</span>
-                <a href="tel:+918179999188" className="text-white font-body text-sm hover:text-secondary transition-colors">
-                  +91 81799 99188
-                </a>
+                <p className="text-white/60 font-body text-xs uppercase tracking-wider mb-0.5">
+                  Call us Anytime
+                </p>
+
+                <div className="flex flex-col">
+                  <a
+                    href="tel:+917799101433"
+                    className="text-white font-body text-sm hover:text-secondary transition-colors"
+                  >
+                    +91 77991 01433
+                  </a>
+
+                </div>
               </div>
             </div>
           </div>
@@ -107,14 +129,11 @@ const Footer = () => {
           <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Social icons */}
             <div className="flex gap-3">
-              {/* X (Twitter) icon */}
-              <a href="#" className="w-9 h-9 rounded-full border border-white/40 flex items-center justify-center text-white/70 hover:text-secondary hover:border-secondary transition-colors">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
-              </a>
               {[
-                { icon: Facebook, href: "https://www.facebook.com/spaceboxconcepts" },
-                { icon: Instagram, href: "https://www.instagram.com/spaceboxconcepts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
-                { icon: Linkedin, href: "https://www.linkedin.com/company/spacebox-concepts" },
+                {
+                  icon: Instagram,
+                  href: "https://www.instagram.com/spaceboxconcepts/",
+                },
               ].map(({ icon: Icon, href }, i) => (
                 <a
                   key={i}
@@ -131,7 +150,10 @@ const Footer = () => {
             {/* Copyright */}
             <p className="text-white/50 text-xs font-body">
               Copyright © 2026 All rights reserved by{" "}
-              <span className="font-semibold text-white/70">SpaceBox Concepts</span>. Crafted with ❤️{" "}
+              <span className="font-semibold text-white/70">
+                SpaceBox Concepts
+              </span>
+              . Crafted with ❤️{" "}
               <a
                 href="https://www.dt7.agency"
                 target="_blank"

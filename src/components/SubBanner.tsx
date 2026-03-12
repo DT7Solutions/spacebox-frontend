@@ -39,7 +39,7 @@ export default function SubBanner({ image, title, highlight, subtitle, height = 
         style={{ opacity: heroOpacity }}
       >
         <motion.p
-          className="text-secondary text-xs uppercase tracking-[0.3em] mb-2 font-body"
+          className="text-white/80 text-xs uppercase tracking-[0.3em] mb-2 font-body"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -52,7 +52,7 @@ export default function SubBanner({ image, title, highlight, subtitle, height = 
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1, delay: 0.5, ease: easeOut }}
         >
-          {title} <span className="text-secondary">{highlight}</span>
+          {title} <span className="text-white font-semibold">{highlight}</span>
         </motion.h1>
       </motion.div>
     </section>

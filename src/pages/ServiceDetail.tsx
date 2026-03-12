@@ -1,11 +1,15 @@
 import { useState, useCallback, useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, CheckCircle2, Sparkles, Palette, Lightbulb, ChevronDown, ArrowLeft, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
 import { services } from '@/components/ServicesSection';
 import SubBanner from '@/components/SubBanner';
 import useEmblaCarousel from 'embla-carousel-react';
+import { isValidPhone, getPhoneError } from '@/lib/phoneValidation';
+
+const RECAPTCHA_SITE_KEY = '6LfT-YYsAAAAANH5sGA7t-a8BuWMt_F4FMhkTRBh';
 
 // Gallery images
 import c1Cabin from '@/assets/projects/c1-cabin.jpg';
@@ -190,6 +194,9 @@ export default function ServiceDetail() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   const highlightsRef = useRef<HTMLDivElement>(null);
@@ -217,6 +224,9 @@ export default function ServiceDetail() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const pErr = getPhoneError(form.phone);
+    if (pErr) { setPhoneError(pErr); return; }
+    if (!captchaToken) { setSendError(true); setTimeout(() => setSendError(false), 3000); return; }
     setSending(true);
     setSendError(false);
 
@@ -235,6 +245,8 @@ export default function ServiceDetail() {
       );
       setSubmitted(true);
       setForm({ first_name: '', last_name: '', phone: '', email: '', message: '' });
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
     } catch (error) {
       console.error('EmailJS error:', error);
       setSendError(true);
@@ -407,10 +419,12 @@ export default function ServiceDetail() {
                       <input
                         required
                         value={form.phone}
-                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-body"
+                        onChange={(e) => { setForm({ ...form, phone: e.target.value }); if (phoneError) { const err = getPhoneError(e.target.value); setPhoneError(err || ''); } }}
+                        onBlur={() => { const err = getPhoneError(form.phone); setPhoneError(err || ''); }}
+                        className={`w-full bg-background border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 outline-none transition-all font-body ${phoneError ? 'border-destructive focus:border-destructive focus:ring-destructive' : 'border-border focus:border-gold focus:ring-gold'}`}
                         placeholder="+91 XXXXX XXXXX"
                       />
+                      {phoneError && <p className="text-destructive text-xs mt-1">{phoneError}</p>}
                     </div>
                     <div>
                       <label className="text-xs font-medium mb-1.5 block text-foreground font-body">Your Email Address *</label>
@@ -434,6 +448,12 @@ export default function ServiceDetail() {
                       placeholder={`Describe your ${service.title.toLowerCase()} requirements...`}
                     />
                   </div>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={(token) => setCaptchaToken(token)}
+                    onExpired={() => setCaptchaToken(null)}
+                  />
                   <button
                     type="submit"
                     disabled={sending}
@@ -535,7 +555,7 @@ function SampleWorksCarousel({ gallery, serviceTitle, fadeUp }: { gallery: strin
       <div className="container mx-auto px-6 sm:px-10 md:px-14 lg:px-20">
         <motion.div className="text-center mb-14" {...fadeUp}>
           <p className="text-secondary text-[13px] uppercase tracking-[3px] mb-3 font-display font-semibold">PORTFOLIO</p>
-          <h2 className="font-display text-3xl md:text-4xl text-foreground font-semibold">Our Sample Works</h2>
+          <h2 className="font-display text-3xl md:text-4xl text-foreground font-semibold">From Vision to Execution</h2>
           <p className="text-muted-foreground text-sm mt-3 max-w-2xl mx-auto font-body">
             Creating a well-designed space requires a full range of design services including furniture selection, colour coordination, and project management.
           </p>

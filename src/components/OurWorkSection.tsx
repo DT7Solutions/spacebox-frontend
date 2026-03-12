@@ -2,24 +2,26 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import projectCommercial from "@/assets/project-commercial.jpg";
-import projectReception from "@/assets/project-reception.jpg";
-import projectMeeting from "@/assets/project-meeting.jpg";
-import projectResidential from "@/assets/project-residential.jpg";
-import projectBedroom from "@/assets/project-bedroom.jpg";
-import projectWorkspace from "@/assets/project-workspace.jpg";
-import c1Lobby from "@/assets/projects/c1-lobby.jpg";
-import c2Reception from "@/assets/projects/c2-reception.jpg";
+import work1 from "@/assets/projects/work-1.png";
+import work2 from "@/assets/projects/work-2.png";
+import work3 from "@/assets/projects/work-3.png";
+import work4 from "@/assets/projects/work-4.png";
+import work5 from "@/assets/projects/work-5.png";
+import work6 from "@/assets/projects/work-6.png";
+import work7 from "@/assets/projects/work-7.png";
+import work8 from "@/assets/projects/work-8.png";
+import work9 from "@/assets/projects/work-9.png";
 
 const projects = [
-  { img: projectCommercial, title: "Modern Office Hub", category: "Commercial" },
-  { img: projectReception, title: "Luxury Reception", category: "Commercial" },
-  { img: projectResidential, title: "Contemporary Living", category: "Residential" },
-  { img: projectMeeting, title: "Executive Boardroom", category: "Office" },
-  { img: projectBedroom, title: "Serene Bedroom Suite", category: "Residential" },
-  { img: projectWorkspace, title: "Creative Workspace", category: "Commercial" },
-  { img: c1Lobby, title: "Grand Lobby", category: "Hospitality" },
-  { img: c2Reception, title: "Corporate Welcome", category: "Commercial" },
+  { img: work1, title: "Restaurant Lounge", category: "Commercial" },
+  { img: work2, title: "Aviation Dining", category: "Hospitality" },
+  { img: work3, title: "Contemporary Living", category: "Residential" },
+  { img: work4, title: "Modular Kitchen", category: "Residential" },
+  { img: work5, title: "Luxury Lounge", category: "Residential" },
+  { img: work6, title: "Outdoor Seating", category: "Hospitality" },
+  { img: work7, title: "Rooftop Café", category: "Commercial" },
+  { img: work8, title: "Trophy Room", category: "Commercial" },
+  { img: work9, title: "Kids Play Zone", category: "Commercial" },
 ];
 
 const PROJECT_HEIGHT = 420; // px per project visible area
@@ -106,7 +108,7 @@ const OurWorkSection = () => {
                       alt={p.title}
                       className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
                       loading="lazy"
-                      style={{ aspectRatio: "1920/800" }}
+                      decoding="async"
                     />
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-500 flex items-end">

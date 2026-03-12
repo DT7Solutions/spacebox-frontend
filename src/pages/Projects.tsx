@@ -7,6 +7,7 @@ import SubBanner from '@/components/SubBanner';
 import { fetchProjectList, type Project as ApiProject, type ProjectGallery } from '@/services/projectService';
 import { mediaUrl } from '@/config/api';
 import c1Reception from '@/assets/projects/c1-reception-1.jpg';
+import projectsBanner from '@/assets/projects/projects_subpage_banner.jpg'
 
 /* ── Lightbox Component ─────────────────────────── */
 function Lightbox({
@@ -222,7 +223,7 @@ export default function Projects() {
   return (
     <div className="pt-20">
       <SubBanner
-        image={c1Reception}
+        image={projectsBanner}
         title="Portfolio of"
         highlight="Excellence"
         subtitle="Our Portfolio"

@@ -1,9 +1,12 @@
-import { User } from "lucide-react";
+import teamAmruta from "@/assets/team-amruta.jpg";
+import teamMini from "@/assets/team-mini.jpg";
+import teamPratyusha from "@/assets/team-pratyusha.jpg";
+import teamMockup from "@/assets/team-mockup.jpg";
 
 const team = [
-  { name: "Amruta Desai", role: "Managing Director, Finance & Strategy" },
-  { name: "Mini Khapekar", role: "Managing Director, Operations & Execution" },
-  { name: "Pratyusha Ravula", role: "Principal Designer & Founder" },
+  { name: "Amruta Desai", role: "Managing Director, Finance & Strategy", image: teamMockup },
+  { name: "Mini Khapekar", role: "Managing Director, Operations & Execution", image: teamMockup },
+  { name: "Pratyusha Ravula", role: "Principal Designer & Founder", image: teamMockup },
 ];
 
 const TeamSection = () => {
@@ -17,9 +20,11 @@ const TeamSection = () => {
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {team.map((t) => (
             <div key={t.name} className="flex flex-col items-center">
-              <div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center mb-4">
-                <User className="w-10 h-10 text-primary-foreground" />
-              </div>
+              <img
+                src={t.image}
+                alt={t.name}
+                className="w-28 h-28 rounded-full object-cover mb-4 shadow-lg"
+              />
               <h3 className="text-lg font-semibold text-foreground font-body">{t.name}</h3>
               <p className="text-sm text-muted-foreground font-body mt-1">{t.role}</p>
             </div>

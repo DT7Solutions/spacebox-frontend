@@ -1,17 +1,37 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import SubBanner from '@/components/SubBanner';
 import projectWorkspace from '@/assets/project-workspace.jpg';
+import { isValidPhone, getPhoneError } from '@/lib/phoneValidation';
+
+const RECAPTCHA_SITE_KEY = '6LfT-YYsAAAAANH5sGA7t-a8BuWMt_F4FMhkTRBh';
+
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', type: '', size: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  const handlePhoneChange = (value: string) => {
+    setForm({ ...form, phone: value });
+    if (phoneError) {
+      const err = getPhoneError(value);
+      setPhoneError(err || '');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const pErr = getPhoneError(form.phone);
+    if (pErr) { setPhoneError(pErr); return; }
+    if (!captchaToken) { setError('Please complete the reCAPTCHA.'); return; }
+
     setLoading(true);
     setError('');
     try {
@@ -30,6 +50,8 @@ export default function Contact() {
       );
       setSubmitted(true);
       setForm({ name: '', email: '', phone: '', type: '', size: '', message: '' });
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
     } catch {
       setError('Failed to send message. Please try again.');
     } finally {
@@ -47,7 +69,6 @@ export default function Contact() {
       />
       <section className="py-24 lg:py-32">
         <div className="container mx-auto px-6 sm:px-10 md:px-14 lg:px-20">
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Form */}
             <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.8 }}>
@@ -102,10 +123,12 @@ export default function Contact() {
                     <input
                       required
                       value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="w-full bg-card border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      onChange={(e) => handlePhoneChange(e.target.value)}
+                      onBlur={() => { const err = getPhoneError(form.phone); setPhoneError(err || ''); }}
+                      className={`w-full bg-card border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:ring-1 outline-none transition-all ${phoneError ? 'border-destructive focus:border-destructive focus:ring-destructive' : 'border-border focus:border-primary focus:ring-primary'}`}
                       placeholder="+91 XXXXX XXXXX"
                     />
+                    {phoneError && <p className="text-destructive text-xs mt-1">{phoneError}</p>}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -146,7 +169,13 @@ export default function Contact() {
                       placeholder="Tell us about your project..."
                     />
                   </div>
-                  {error && <p className="text-red-500 text-sm">{error}</p>}
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={(token) => setCaptchaToken(token)}
+                    onExpired={() => setCaptchaToken(null)}
+                  />
+                  {error && <p className="text-destructive text-sm">{error}</p>}
                   <button
                     type="submit"
                     disabled={loading}
@@ -174,7 +203,6 @@ export default function Contact() {
                   <div>
                     <p className="text-sm text-muted-foreground">Phone</p>
                     <p className="font-medium group-hover:text-primary transition-colors">+91 7799101433</p>
-                    <p className="font-medium group-hover:text-primary transition-colors">+91 8179999188</p>
                   </div>
                 </a>
                 <div className="flex items-start gap-4">

@@ -13,6 +13,7 @@ const HeroSection = () => {
         muted
         loop
         playsInline
+        preload="none"
         poster={heroImg}
         className="absolute inset-0 w-full h-full object-cover"
       >

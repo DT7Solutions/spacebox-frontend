@@ -6,25 +6,25 @@ const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const testimonials = [
   {
-    name: "Rajesh Sharma",
-    role: "CEO, TechVista Solutions",
-    text: "SpaceBox transformed our office into a workspace that truly reflects our brand. The team's attention to detail and innovative approach exceeded our expectations.",
+    name: "Sunny Rav",
+    // role: "Director, Horizon Hotels",
+    text: "Heartfelt Thanks to Spacebox Concepts, I wanted to take a moment to express my sincere gratitude for the incredible work you've done on my home. Even though I was in USA, I could already envision the beautiful transformations you've made. Your attention to detail and design expertise shine through in every corner, and I was surprised and overwhelmed to see everything in person. Thank you for bringing my vision to life and for making this process so enjoyable. Thanks again.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
+  },
+  {
+    name: "Ashwin Debbadi",
+    // role: "CEO, TechVista Solutions",
+    text: "Spectacular designs and exceptional execution with ease and stress free … all the best for your future endeavours.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
   },
   {
-    name: "Priya Mehta",
-    role: "Homeowner",
-    text: "Our home feels completely new. The design team understood our lifestyle perfectly and created spaces that are both beautiful and functional for our family.",
+    name: "Shiva Krishna",
+    // role: "Homeowner",
+    text: "Excellent 👌👌 …",
     rating: 5,
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face",
-  },
-  {
-    name: "Amit Patel",
-    role: "Director, Horizon Hotels",
-    text: "The hospitality spaces SpaceBox designed for us have received incredible guest feedback. Their understanding of commercial design is outstanding.",
-    rating: 5,
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
   },
 ];
 
@@ -118,12 +118,12 @@ const TestimonialsSection = () => {
                 </p>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-secondary/30">
+                  {/* <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-secondary/30">
                     <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
-                  </div>
+                  </div> */}
                   <div>
                     <p className="text-foreground font-semibold text-lg">{t.name}</p>
-                    <p className="text-secondary text-sm font-body">{t.role}</p>
+                    {/* <p className="text-secondary text-sm font-body">{t.role || "Client"}</p> */}
                   </div>
                 </div>
               </motion.div>

@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, User, Briefcase, Palette, Home, Send, ChevronDown, Loader2, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import ReCAPTCHA from 'react-google-recaptcha';
 import SubBanner from "@/components/SubBanner";
 import { apiUrl, ENDPOINTS } from "@/config/api";
+import { isValidPhone, getPhoneError } from '@/lib/phoneValidation';
+
+const RECAPTCHA_SITE_KEY = '6LfT-YYsAAAAANH5sGA7t-a8BuWMt_F4FMhkTRBh';
 import {
   Select,
   SelectContent,
@@ -73,6 +77,9 @@ const StartProject = () => {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState('');
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -106,11 +113,11 @@ const StartProject = () => {
 
   const canProceed = () => {
     switch (step) {
-      case 1: return form.name.trim() && form.email.trim() && form.phone.trim();
+      case 1: return form.name.trim() && form.email.trim() && form.phone.trim() && isValidPhone(form.phone);
       case 2: return form.services.length > 0 && form.propertyType;
       case 3: return form.budget && form.timeline;
       case 4: return form.styles.length > 0;
-      case 5: return true;
+      case 5: return !!captchaToken;
       default: return false;
     }
   };
@@ -119,7 +126,6 @@ const StartProject = () => {
     setSubmitting(true);
     setError(null);
     try {
-      debugger;
       const response = await fetch(apiUrl(ENDPOINTS.PROJECT_INQUIRY), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -154,7 +160,7 @@ const StartProject = () => {
               We've received your project details. Our team will reach out within 24 hours to discuss your vision.
             </p>
             <Link
-              to="/home"
+              to="/"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-lg font-semibold hover:bg-secondary transition-all duration-300"
             >
               Back to Home
@@ -238,13 +244,15 @@ const StartProject = () => {
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-medium mb-1.5 block">Phone Number *</label>
+                      <label className="text-sm font-medium mb-1.5 block">Phone Number * <span className="text-xs text-muted-foreground">(10 digits)</span></label>
                       <input
                         value={form.phone}
-                        onChange={(e) => update("phone", e.target.value)}
-                        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-all"
+                        onChange={(e) => { update("phone", e.target.value); if (phoneError) { const err = getPhoneError(e.target.value); setPhoneError(err || ''); } }}
+                        onBlur={() => { const err = getPhoneError(form.phone); setPhoneError(err || ''); }}
+                        className={`w-full bg-background border rounded-lg px-4 py-3 text-sm focus:ring-1 outline-none transition-all ${phoneError ? 'border-destructive focus:border-destructive focus:ring-destructive' : 'border-border focus:border-secondary focus:ring-secondary'}`}
                         placeholder="+91 XXXXX XXXXX"
                       />
+                      {phoneError && <p className="text-destructive text-xs mt-1">{phoneError}</p>}
                     </div>
                   </div>
                   <div>
@@ -483,6 +491,14 @@ const StartProject = () => {
                   <ReviewBlock label="Style" value={form.styles.join(", ")} />
                   {form.existingFurniture && <ReviewBlock label="Keep Furniture" value={form.existingFurniture} />}
                   {form.specialRequirements && <ReviewBlock label="Special Needs" value={form.specialRequirements} />}
+                </div>
+                <div className="mt-6">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={(token) => setCaptchaToken(token)}
+                    onExpired={() => setCaptchaToken(null)}
+                  />
                 </div>
                 <div className="mt-6">
                   <label className="text-sm font-medium mb-1.5 block">How did you hear about us?</label>

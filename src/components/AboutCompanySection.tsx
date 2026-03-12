@@ -53,7 +53,7 @@ const AboutCompanySection = () => {
   return (
     <section className="relative py-12 md:py-16 lg:py-24 overflow-hidden bg-background">
       <div className="container mx-auto px-6 sm:px-10 md:px-14 lg:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-6 items-center">
           {/* Content Column */}
           <motion.div
             variants={containerVariants}
@@ -75,6 +75,8 @@ const AboutCompanySection = () => {
               src={logo}
               alt="SpaceBox Concepts"
               className="h-16 md:h-20 w-auto object-contain"
+              loading="lazy"
+              decoding="async"
             />
 
             <motion.p
@@ -98,13 +100,13 @@ const AboutCompanySection = () => {
               We specialize in residential interior design, office interior design, and commercial interior projects with a focus on clarity, material quality, and disciplined project management.
             </motion.p>
 
-            <motion.a
+            {/* <motion.a
               href="/about"
               variants={slideUp}
               className="mt-8 inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-lg font-semibold uppercase tracking-wider text-sm hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] hover:bg-secondary transition-all duration-300 shadow-md hover:shadow-xl"
             >
               Know More
-            </motion.a>
+            </motion.a> */}
           </motion.div>
 
           {/* Image Column */}
@@ -119,6 +121,7 @@ const AboutCompanySection = () => {
               src={aboutImg}
               alt="SpaceBox Concepts – Modern office interior"
               className="w-full max-w-lg lg:max-w-none rounded-2xl object-cover shadow-xl"
+              loading="lazy"
             />
           </motion.div>
         </div>

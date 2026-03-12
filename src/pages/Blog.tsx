@@ -6,6 +6,7 @@ import SubBanner from '@/components/SubBanner';
 import { fetchBlogList } from '@/services/blogService';
 import { mediaUrl } from '@/config/api';
 import r1DrawingRoom from '@/assets/projects/r1-drawing-room.jpg';
+import blogsBanner from '@/assets/blog/blogs_subpage_banner.jpg'
 
 export default function Blog() {
   const { data: posts = [], isLoading, isError } = useQuery({
@@ -16,7 +17,7 @@ export default function Blog() {
   return (
     <div className="pt-20">
       <SubBanner
-        image={r1DrawingRoom}
+        image={blogsBanner}
         title="Design"
         highlight="Blog"
         subtitle="Insights"

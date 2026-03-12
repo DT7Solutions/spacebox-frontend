@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Send } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { isValidPhone, getPhoneError } from "@/lib/phoneValidation";
+
+const RECAPTCHA_SITE_KEY = '6LfT-YYsAAAAANH5sGA7t-a8BuWMt_F4FMhkTRBh';
 
 interface BookConsultationDialogProps {
   children: React.ReactNode;
@@ -10,21 +14,31 @@ export default function BookConsultationDialog({ children }: BookConsultationDia
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", type: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const pErr = getPhoneError(form.phone);
+    if (pErr) { setPhoneError(pErr); return; }
+    if (!captchaToken) { setCaptchaError("Please complete the reCAPTCHA."); return; }
+    setCaptchaError("");
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
       setOpen(false);
       setForm({ name: "", email: "", phone: "", type: "", message: "" });
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
     }, 2000);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-background border-border">
+      <DialogContent className="sm:max-w-[500px] bg-background border-border max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             Book a <span className="text-secondary">Consultation</span>
@@ -46,14 +60,16 @@ export default function BookConsultationDialog({ children }: BookConsultationDia
               />
             </div>
             <div>
-              <label className="text-xs font-medium mb-1 block">Phone *</label>
+              <label className="text-xs font-medium mb-1 block">Phone * <span className="text-muted-foreground">(10 digits)</span></label>
               <input
                 required
                 value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full bg-card border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                onChange={(e) => { setForm({ ...form, phone: e.target.value }); if (phoneError) { const err = getPhoneError(e.target.value); setPhoneError(err || ''); } }}
+                onBlur={() => { const err = getPhoneError(form.phone); setPhoneError(err || ''); }}
+                className={`w-full bg-card border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 outline-none transition-all ${phoneError ? 'border-destructive focus:border-destructive focus:ring-destructive' : 'border-border focus:border-primary focus:ring-primary'}`}
                 placeholder="+91 XXXXX XXXXX"
               />
+              {phoneError && <p className="text-destructive text-xs mt-1">{phoneError}</p>}
             </div>
           </div>
           <div>
@@ -90,6 +106,13 @@ export default function BookConsultationDialog({ children }: BookConsultationDia
               placeholder="Tell us about your project..."
             />
           </div>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey={RECAPTCHA_SITE_KEY}
+            onChange={(token) => { setCaptchaToken(token); setCaptchaError(""); }}
+            onExpired={() => setCaptchaToken(null)}
+          />
+          {captchaError && <p className="text-destructive text-xs">{captchaError}</p>}
           <button
             type="submit"
             className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-lg font-semibold uppercase tracking-wider text-sm hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.97] hover:bg-secondary transition-all duration-300 shadow-md hover:shadow-xl"

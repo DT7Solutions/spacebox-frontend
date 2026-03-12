@@ -5,6 +5,10 @@ import {
   ClipboardList, HeadphonesIcon,
   Compass, Layers, Shield, Wrench, Facebook, Twitter, Linkedin, Instagram
 } from 'lucide-react';
+import teamAmruta from '@/assets/team-amruta.jpg';
+import teamMini from '@/assets/team-mini.jpg';
+import teamPratyusha from '@/assets/team-pratyusha.jpg';
+import teamMockup from '@/assets/team-mockup.jpg';
 import aboutHeroSplit from '@/assets/about-hero-split.jpg';
 import projectResidential from '@/assets/project-residential.jpg';
 import teamBg from '@/assets/team-bg.jpg';
@@ -88,19 +92,22 @@ const timeline = [
 /* ── Team ── */
 const partners = [
   {
-    name: 'Mini Khapekar',
-    role: 'Managing Director, Operations & Execution',
-    bio: 'Operations expert ensuring flawless project delivery every time.',
-  },
-  {
     name: 'Pratyusha Ravula',
     role: 'Principal Designer & Founder',
     bio: 'Visionary designer with 7+ years of creating transformative interior spaces.',
+    image: teamMockup,
+  },
+  {
+    name: 'Mini Khapekar',
+    role: 'Managing Director, Operations & Execution',
+    bio: 'Operations expert ensuring flawless project delivery every time.',
+    image: teamMockup,
   },
   {
     name: 'Amruta Desai',
     role: 'Managing Director, Finance & Strategy',
     bio: 'Strategic leader driving financial excellence and sustainable growth.',
+    image: teamMockup,
   },
 ];
 
@@ -161,7 +168,7 @@ export default function About() {
           style={{ opacity: heroOpacity }}
         >
           <motion.p
-            className="text-secondary text-xs uppercase tracking-[0.3em] mb-2 font-body"
+            className="text-white/80 text-xs uppercase tracking-[0.3em] mb-2 font-body"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -174,7 +181,7 @@ export default function About() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 1, delay: 0.5, ease: easeOut }}
           >
-            About <span className="text-secondary">SpaceBox</span>
+            About <span className="text-white font-semibold">SpaceBox</span>
           </motion.h1>
           <motion.p
             className="mt-6 text-white/70 font-body text-lg max-w-xl"
@@ -397,10 +404,12 @@ export default function About() {
                 {/* Photo card */}
                 <div className="relative overflow-hidden rounded-xl">
                   {/* Photo placeholder with gradient */}
-                  <div className="aspect-[3/4] bg-gradient-to-br from-muted to-border flex items-center justify-center relative overflow-hidden">
-                    <span className="text-6xl font-bold text-muted-foreground/20">
-                      {p.name.split(' ').map(n => n[0]).join('')}
-                    </span>
+                  <div className="aspect-[3/4] relative overflow-hidden">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-full object-cover"
+                    />
                     {/* Decorative corner accents */}
                     <div className="absolute top-3 right-3 w-16 h-16 border-t-2 border-r-2 border-secondary/40 rounded-tr-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="absolute bottom-3 left-3 w-16 h-16 border-b-2 border-l-2 border-secondary/40 rounded-bl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
