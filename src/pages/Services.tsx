@@ -8,7 +8,7 @@ import consultation from "@/assets/services/consultation.jpg";
 
 export default function Services() {
   return (
-    <div className="pt-20">
+    <div>
       <SEO
         title="Interior Design Services"
         description="Explore our comprehensive interior design services including space planning, 3D modelling, furniture selection, lighting design, colour schemes, and project management in Telangana."

@@ -11,7 +11,7 @@ interface SubBannerProps {
   height?: number;
 }
 
-export default function SubBanner({ image, title, highlight, subtitle, height = 250 }: SubBannerProps) {
+export default function SubBanner({ image, title, highlight, subtitle, height = 330 }: SubBannerProps) {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);

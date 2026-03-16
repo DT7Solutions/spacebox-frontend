@@ -61,7 +61,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="pt-20">
+    <div>
       <SEO
         title="Contact Us - Get In Touch"
         description="Contact SpaceBox Concepts for interior design consultations in Telangana. Reach us by phone, email, or visit our office in Hyderabad."
@@ -73,8 +73,8 @@ export default function Contact() {
         highlight="Beautiful"
         subtitle="Get In Touch"
       />
-      <section className="py-24 lg:py-32">
-        <div className="container mx-auto px-6 sm:px-10 md:px-14 lg:px-20">
+      <section className="py-16 sm:py-24 lg:py-32">
+        <div className="container mx-auto px-4 sm:px-10 md:px-14 lg:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Form */}
             <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.8 }}>
@@ -198,7 +198,7 @@ export default function Contact() {
               <div className="bg-card border border-border rounded-2xl p-8 space-y-6">
                 <h3 className="text-xl font-bold mb-6">Contact Information</h3>
                 <a href="mailto:spaceboxconcepts@gmail.com" className="flex items-start gap-4 group">
-                  <Mail className="w-5 h-5 text-secondary mt-0.5" />
+                  <Mail className="w-6 h-6 text-secondary mt-0.5" />
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
                     <p className="font-medium group-hover:text-primary transition-colors">spaceboxconcepts@gmail.com</p>
@@ -224,7 +224,7 @@ export default function Contact() {
                   <Clock className="w-5 h-5 text-secondary mt-0.5" />
                   <div>
                     <p className="text-sm text-muted-foreground">Business Hours</p>
-                    <p className="font-medium">Mon - Sat: 9:00 AM - 7:00 PM</p>
+                    <p className="font-medium">Mon - Sat: 10:00 AM - 7:00 PM</p>
                     <p className="text-sm text-muted-foreground">Sunday: By Appointment</p>
                   </div>
                 </div>

@@ -24,7 +24,7 @@ export default function BlogDetail() {
 
   if (isLoading) {
     return (
-      <div className="pt-20">
+      <div>
         <SubBanner image={r1DrawingRoom} title="Loading..." highlight="" subtitle="Blog" />
         <section className="py-20 lg:py-28">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 animate-pulse space-y-6">
@@ -56,7 +56,7 @@ export default function BlogDetail() {
   const tags = post.tags ? post.tags.split(',').map((t) => t.trim()).filter(Boolean) : [];
 
   return (
-    <div className="pt-20">
+    <div>
       <SEO
         title={post.meta_title || post.title}
         description={post.meta_description || post.short_description}

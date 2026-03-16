@@ -14,13 +14,16 @@ const stages = [
   { num: "08", title: "Handover & After-Support", desc: "Delivering the space in move-in ready condition with post-handover assistance.", icon: HandshakeIcon },
 ];
 
+const CARD_W_MOBILE = 260;
 const CARD_W = 380;
 const CARD_GAP = 24;
 
 const WorkProcessSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const cardW = isMobile ? CARD_W_MOBILE : CARD_W;
 
-  const totalCardsWidth = stages.length * CARD_W + (stages.length - 1) * CARD_GAP;
+  const totalCardsWidth = stages.length * cardW + (stages.length - 1) * CARD_GAP;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -182,10 +185,8 @@ function StageCard({
       style={{
         scale: isHovered ? 1 : cardScale,
         opacity: isHovered ? 1 : cardOpacity,
-        width: `${CARD_W}px`,
-        minWidth: `${CARD_W}px`,
       }}
-      className="h-[340px] md:h-[360px] group"
+      className="w-[260px] md:w-[380px] min-w-[260px] md:min-w-[380px] h-[280px] md:h-[360px] group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -209,7 +210,7 @@ function StageCard({
 
         {/* Number - filled white when active/hovered, outlined when inactive */}
         <span
-          className="text-7xl font-black leading-none mb-2 select-none transition-all duration-300"
+          className="text-5xl md:text-7xl font-black leading-none mb-2 select-none transition-all duration-300"
           style={showWhite ? {
             color: "#ffffff",
             WebkitTextStroke: "2px #ffffff",

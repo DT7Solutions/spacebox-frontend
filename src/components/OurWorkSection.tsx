@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
@@ -29,9 +29,18 @@ const GAP = 24;
 
 const OurWorkSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+
+  const cardHeight = isMobile ? 240 : PROJECT_HEIGHT;
 
   // Total scroll height = enough to scroll through all projects
-  const totalScrollHeight = (projects.length) * (PROJECT_HEIGHT + GAP);
+  const totalScrollHeight = (projects.length) * (cardHeight + GAP);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -39,7 +48,7 @@ const OurWorkSection = () => {
   });
 
   // Translate the project list upward as user scrolls
-  const maxTranslate = (projects.length - 1) * (PROJECT_HEIGHT + GAP);
+  const maxTranslate = (projects.length - 1) * (cardHeight + GAP);
   const translateY = useTransform(scrollYProgress, [0, 1], [0, -maxTranslate]);
 
   return (
@@ -49,7 +58,7 @@ const OurWorkSection = () => {
       style={{ height: `${totalScrollHeight + 100}px` }}
     >
       {/* Sticky container that stays in view */}
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center pt-24 lg:pt-0">
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center pt-32 lg:pt-0">
         <div className="container mx-auto px-4 sm:px-6 md:px-10 lg:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-center">
             {/* Left: Sticky text */}
@@ -88,7 +97,7 @@ const OurWorkSection = () => {
             </motion.div>
 
             {/* Right: Scrolling projects */}
-            <div className="relative h-[50vh] sm:h-[60vh] lg:h-[calc(100vh-120px)] overflow-hidden">
+            <div className="relative h-[65vh] sm:h-[65vh] lg:h-[calc(100vh-120px)] overflow-hidden pb-10">
               <motion.div
                 style={{ y: translateY }}
                 className="flex flex-col"
@@ -99,7 +108,7 @@ const OurWorkSection = () => {
                     key={p.title}
                     className="group relative overflow-hidden rounded-sm"
                     style={{
-                      height: `${PROJECT_HEIGHT}px`,
+                      height: `${cardHeight}px`,
                       marginBottom: i < projects.length - 1 ? `${GAP}px` : 0,
                     }}
                   >

@@ -187,7 +187,7 @@ export default function Careers() {
   });
 
   return (
-    <div className="pt-20">
+    <div>
       <SEO
         title="Careers - Join Our Creative Team"
         description="Explore career opportunities at SpaceBox Concepts. Join our talented team of interior designers, project managers, and creative professionals in Hyderabad."

@@ -222,7 +222,7 @@ export default function Projects() {
   });
 
   return (
-    <div className="pt-20">
+    <div>
       <SEO
         title="Our Projects - Interior Design Portfolio"
         description="Browse our portfolio of residential and commercial interior design projects in Telangana. See how SpaceBox Concepts transforms spaces with custom designs."

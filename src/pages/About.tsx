@@ -142,7 +142,7 @@ export default function About() {
   const clipX = useTransform(scrollYProgress, [0, 0.5], [50, 100]);
 
   return (
-    <div className="pt-20">
+    <div>
       <SEO
         title="About Us - Our Story & Team"
         description="Learn about SpaceBox Concepts — our passionate team of interior designers in Telangana dedicated to crafting custom residential and commercial spaces that inspire."

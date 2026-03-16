@@ -16,7 +16,7 @@ export default function Blog() {
   });
 
   return (
-    <div className="pt-20">
+    <div>
       <SEO
         title="Interior Design Blog - Tips & Trends"
         description="Read the latest interior design tips, trends, and inspiration from SpaceBox Concepts. Expert insights on colour psychology, small spaces, and more."

@@ -6,7 +6,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-[75vh] sm:min-h-screen flex items-center overflow-hidden"
     >
       <video
         autoPlay
@@ -22,7 +22,7 @@ const HeroSection = () => {
 
       <div className="absolute inset-0 bg-primary/70" />
 
-      <div className="relative z-10 flex items-center min-h-screen container mx-auto px-4 sm:px-8 md:px-16">
+      <div className="relative z-10 flex items-center min-h-[75vh] sm:min-h-screen container mx-auto px-4 sm:px-8 md:px-16">
         <div className="max-w-2xl pt-20 sm:pt-24 pb-16 sm:pb-0">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05] tracking-tight text-primary-foreground animate-fade-in-up">
             Introducing Custom Interior Solutions in Telangana
